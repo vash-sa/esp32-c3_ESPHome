@@ -10,13 +10,15 @@ jobs:
       - uses: actions/checkout@v4
       
       - name: Build ESPHome Binary
-        uses: esphome/build-action@v6  # Обновил до v6
+        uses: esphome/build-action@v6
         with:
-          yaml_file: bt.yaml
+          # В v6 параметр называется 'configuration', а не 'yaml_file'
+          configuration: bt.yaml
           version: latest
           
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
           name: esp32-c3-binary
+          # Путь к файлу остается прежним
           path: .esphome/build/*/checkout/.pioenvs/*/firmware.bin
