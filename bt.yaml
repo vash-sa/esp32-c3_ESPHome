@@ -1,0 +1,31 @@
+esphome:
+  name: esp32-c3-bt-proxy
+  # Исправляет bootloop: принудительный режим Dual I/O для флеш-памяти
+  platformio_options:
+    board_build.flash_mode: dio
+
+esp32:
+  board: esp32-c3-devkitm-1
+  variant: esp32c3
+  # Для Bluetooth на C3 крайне важен esp-idf (вместо arduino)
+  framework:
+    type: esp-idf
+
+# Подключаем готовый пакет Bluetooth Proxy от разработчиков ESPHome
+packages:
+  remote_package:
+    url: https://github.com
+    files: [esp32-generic/esp32-generic-c3.yaml]
+    ref: main
+
+# Ваши настройки сети
+wifi:
+  ssid: "ASUS_W"
+  password: "whiteWOLF667djkr"
+  
+  # Рекомендуется для стабильности на C3
+  power_save_mode: none
+
+api:
+ota:
+logger:
