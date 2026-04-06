@@ -10,13 +10,14 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build ESPHome Binary
-        uses: esphome/build-action@v5  # Возвращаемся на стабильную v5
+        uses: esphome/build-action@v5
         with:
-          yaml_file: bt.yaml          # Используем проверенный параметр
+          yaml_file: bt.yaml
           version: latest
+          cache: false  # ПРИНУДИТЕЛЬНО ОТКЛЮЧАЕМ КЕШ, чтобы обойти ошибку
 
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
           name: esp32-c3-binary
-          path: .esphome/build/*/checkout/.pioenvs/*/firmware.bin
+          path: .esphome/build/bt/.pioenvs/*/firmware.bin
