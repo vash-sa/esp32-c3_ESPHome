@@ -29,4 +29,4 @@ jobs:
         with:
           name: esp32-c3-binary
           # Путь куда ESPHome складывает бинарник по умолчанию
-          path: .esphome/build/esp32-c3-bt-proxy/.pioenvs/*/firmware.bin
+          path: .esphome/build/*/.pioenvs/*/firmware.bin
