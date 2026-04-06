@@ -1,0 +1,25 @@
+name: Compile ESPHome
+
+on:
+  workflow_dispatch: # Это создаст ту самую кнопку ручного запуска
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cache ESPHome
+        uses: actions/cache@v4
+        with:
+          path: ~/.temp/esphome
+          key: esphome-cache
+      - name: Build ESPHome Binary
+        uses: esphome/build-action@v5
+        with:
+          yaml_file: bt.yaml # Имя вашего файла в репозитории
+          version: latest
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: esp32-c3-binary
+          path: .esphome/build/*/checkout/.pioenvs/*/firmware.bin
