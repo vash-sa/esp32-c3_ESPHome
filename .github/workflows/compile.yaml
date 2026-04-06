@@ -15,18 +15,23 @@ jobs:
           python-version: '3.11'
 
       - name: Install ESPHome
-        run: |
-          pip install esphome
-          esphome version
+        run: pip install esphome
 
       - name: Compile YAML
-        run: |
-          # Компилируем вручную без всяких сторонних плагинов
-          esphome compile bt.yaml
+        run: esphome compile bt.yaml
 
-      - name: Upload binary
+      - name: Copy build artifacts to output
+        run: |
+          # Создаем папку, как ты и хотел
+          mkdir -p output
+          # ESPHome всегда кладет бинарники в папку .esphome/build/
+          # Мы копируем оттуда ВСЕ .bin файлы в нашу новую папку output
+          find .esphome/build/ -name "*.bin" -exec cp {} output/ \;
+
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: esp32-c3-binary
-          # Путь куда ESPHome складывает бинарник по умолчанию
-          path: "**/firmware.bin"
+          name: esp32-c3-firmware
+          # Забираем созданную папку
+          path: output/
+          if-no-files-found: error
