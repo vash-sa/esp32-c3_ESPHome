@@ -8,17 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Build ESPHome Binary
-        uses: esphome/build-action@v6
+        uses: esphome/build-action@v5  # Возвращаемся на стабильную v5
         with:
-          # В v6 параметр называется 'configuration', а не 'yaml_file'
-          configuration: bt.yaml
+          yaml_file: bt.yaml          # Используем проверенный параметр
           version: latest
-          
+
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
           name: esp32-c3-binary
-          # Путь к файлу остается прежним
           path: .esphome/build/*/checkout/.pioenvs/*/firmware.bin
