@@ -9,15 +9,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build ESPHome Binary
-        uses: esphome/build-action@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          yaml_file: bt.yaml
-          version: latest
-          cache: false  # ПРИНУДИТЕЛЬНО ОТКЛЮЧАЕМ КЕШ, чтобы обойти ошибку
+          python-version: '3.11'
+
+      - name: Install ESPHome
+        run: |
+          pip install esphome
+          esphome version
+
+      - name: Compile YAML
+        run: |
+          # Компилируем вручную без всяких сторонних плагинов
+          esphome compile bt.yaml
 
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
           name: esp32-c3-binary
-          path: .esphome/build/bt/.pioenvs/*/firmware.bin
+          # Путь куда ESPHome складывает бинарник по умолчанию
+          path: .esphome/build/esp32-c3-bt-proxy/.pioenvs/*/firmware.bin
