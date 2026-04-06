@@ -14,7 +14,7 @@ esp32:
 # Подключаем готовый пакет Bluetooth Proxy от разработчиков ESPHome
 packages:
   remote_package:
-    url: https://github.com
+    url: https://github.com/esphome/bluetooth-proxies
     files: [esp32-generic/esp32-generic-c3.yaml]
     ref: main
 
