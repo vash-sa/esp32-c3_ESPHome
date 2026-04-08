@@ -7,6 +7,14 @@ esphome:
   includes:
     - lora_handler.h
 
+  # Запускаем драйвер при старте
+  on_boot:
+    priority: -10
+    then:
+      - lambda: |-
+          auto *my_lora = new LoRaCustomComponent();
+          App.register_component(my_lora); 
+
 esp32:
   board: esp32-c3-devkitm-1
   variant: esp32c3
@@ -43,9 +51,3 @@ ota:
 # Логгер для отладки LoRa в консоли
 logger:
   level: DEBUG
-
-# Регистрация нашего кастомного LoRa компонента
-custom_component:
-  - lambda: |-
-      auto my_lora = new LoRaCustomComponent();
-      return {my_lora};
