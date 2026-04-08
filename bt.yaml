@@ -8,8 +8,12 @@ esphome:
     priority: -10
     then:
       - lambda: |-
-          auto *my_lora = new LoRaCustomComponent();
-          App.register_component_(my_lora); 
+          static auto *my_lora = new LoRaCustomComponent();
+          if (my_lora != nullptr) {
+            App.register_component_(my_lora);
+            my_lora->setup(); // ПИННИ ЕГО, чтобы он проснулся
+            ESP_LOGI("custom", "LoRa Driver injected and started!");
+          }
 
 esp32:
   board: esp32-c3-devkitm-1
