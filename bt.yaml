@@ -1,29 +1,59 @@
 esphome:
   name: esp32-c3-bt-proxy
-  # Исправляет bootloop: принудительный режим Dual I/O для флеш-памяти
   platformio_options:
     board_build.flash_mode: dio
+  includes:
+    - lora_handler.h
 
 esp32:
   board: esp32-c3-devkitm-1
   variant: esp32c3
-  # Для Bluetooth на C3 крайне важен esp-idf (вместо arduino)
   framework:
     type: esp-idf
 
-# Подключаем готовый пакет Bluetooth Proxy от разработчиков ESPHome
+# Определяем сенсоры в ESPHome
+sensor:
+  - platform: template
+    name: "LoRa Temperature"
+    id: lora_temp
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+  - platform: template
+    name: "LoRa Battery"
+    id: lora_vcc
+    unit_of_measurement: "V"
+    device_class: "voltage"
+  - platform: template
+    name: "LoRa CO Gas"
+    id: lora_gas
+    unit_of_measurement: "ppm"
+    device_class: "carbon_monoxide"
+
+binary_sensor:
+  - platform: template
+    name: "LoRa Smoke"
+    id: lora_smoke
+    device_class: "smoke"
+
+custom_component:
+  - lambda: |-
+      auto my_lora = new LoRaCustomComponent();
+      // Передаем ID сенсоров из YAML в C++ код
+      my_lora->temp_sensor = lora_temp;
+      my_lora->vcc_sensor = lora_vcc;
+      my_lora->gas_sensor = lora_gas;
+      my_lora->smoke_sensor = lora_smoke;
+      return {my_lora};
+
 packages:
   remote_package:
     url: https://github.com/esphome/bluetooth-proxies
     files: [esp32-generic/esp32-generic-c3.yaml]
     ref: main
 
-# Ваши настройки сети
 wifi:
   ssid: "ASUS_W"
   password: "whiteWOLF667djkr"
-  
-  # Рекомендуется для стабильности на C3
   power_save_mode: none
 
 api:
