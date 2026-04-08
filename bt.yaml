@@ -1,13 +1,9 @@
 esphome:
   name: esp32-c3-bt-proxy
-  # Исправляет bootloop: принудительный режим Dual I/O для флеш-памяти
   platformio_options:
     board_build.flash_mode: dio
-  # Подключаем внешний C++ файл драйвера
   includes:
     - lora_handler.h
-
-  # Запускаем драйвер при старте
   on_boot:
     priority: -10
     then:
