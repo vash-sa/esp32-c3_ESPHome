@@ -9,7 +9,7 @@ esphome:
     then:
       - lambda: |-
           auto *my_lora = new LoRaCustomComponent();
-          App.register_component(my_lora); 
+          App.register_component_(my_lora); 
 
 esp32:
   board: esp32-c3-devkitm-1
