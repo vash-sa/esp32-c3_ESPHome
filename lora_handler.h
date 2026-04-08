@@ -21,7 +21,7 @@ class LoRaCustomComponent : public PollingComponent {
   const uint8_t ENCRYPT_KEY[16] = {'A','R','M','A','G','E','D','O','N','M','I','L','L','E','N','N'};
   std::vector<int> registered_nodes;
 
-  LoRaCustomComponent() : PollingComponent(50) {}
+  LoRaCustomComponent() : PollingComponent(350) {}
 
   void setup() override {
     // 1. Инициализация GPIO через ESP-IDF
