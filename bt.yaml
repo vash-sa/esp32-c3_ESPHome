@@ -31,6 +31,8 @@ mqtt:
 
 api:
 ota:
+  - platform: esphome
+safe_mode:
 
 logger:
   level: DEBUG
