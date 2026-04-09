@@ -4,19 +4,18 @@ esphome:
     board_build.flash_mode: dio
   includes:
     - lora_handler.h
-  on_boot:
-    priority: 800  # <--- СТАВЬ ЭТО!
-    then:
-      - lambda: |-
-          auto *my_lora = new LoRaCustomComponent();
-          App.register_component_(my_lora);
-          ESP_LOGI("custom", "LoRa Component Registered at boot!");
+
+# Правильный способ регистрации кастомного кода
+custom_component:
+  - lambda: |-
+      auto *my_lora = new LoRaCustomComponent();
+      return {my_lora};
 
 esp32:
   board: esp32-c3-devkitm-1
   variant: esp32c3
   framework:
-    type: esp-idf # ОБЯЗАТЕЛЬНО для работы с driver/spi_master.h
+    type: esp-idf
 
 wifi:
   ssid: "ASUS_W"
@@ -27,11 +26,14 @@ mqtt:
   broker: 192.168.1.64
   username: "sergey_vash"
   password: "vash_sa"
+  # Оставляем false, так как ты шлешь Discovery вручную из C++
   discovery: false 
 
 api:
 ota:
   - platform: esphome
+
+# Дает шанс прошиться, если код уйдет в бесконечный ребут
 safe_mode:
 
 logger:
