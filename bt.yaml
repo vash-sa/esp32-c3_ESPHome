@@ -5,12 +5,12 @@ esphome:
   includes:
     - lora_handler.h
   on_boot:
-    priority: -10
+    priority: 800  # <--- СТАВЬ ЭТО!
     then:
       - lambda: |-
-          static auto *my_lora = new LoRaCustomComponent();
+          auto *my_lora = new LoRaCustomComponent();
           App.register_component_(my_lora);
-          // my_lora->setup(); <- УДАЛЯЕМ, ESPHome сам вызовет его при старте App
+          ESP_LOGI("custom", "LoRa Component Registered at boot!");
 
 esp32:
   board: esp32-c3-devkitm-1
