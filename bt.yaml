@@ -1,6 +1,5 @@
 esphome:
   name: esp32-c3-bt-proxy
-  # Специфичные опции для прошивки C3 через DIO
   platformio_options:
     board_build.flash_mode: dio
   includes:
@@ -10,30 +9,18 @@ esphome:
     then:
       - lambda: |-
           static auto *my_lora = new LoRaCustomComponent();
-          if (my_lora != nullptr) {
-            App.register_component_(my_lora);
-            my_lora->setup(); 
-            ESP_LOGI("custom", "LoRa Driver injected and started!");
-          }
+          App.register_component_(my_lora);
+          // my_lora->setup(); <- УДАЛЯЕМ, ESPHome сам вызовет его при старте App
 
 esp32:
   board: esp32-c3-devkitm-1
   variant: esp32c3
-  # ПЕРЕКЛЮЧАЕМ на arduino, так как lora_handler.h чаще всего написан под него
   framework:
-    type: arduino
-
-# УБИРАЕМ (комментируем) пакет bluetooth-proxies
-# packages:
-#   remote_package:
-#     url: https://github.com
-#     files: [esp32-generic/esp32-generic-c3.yaml]
-#     ref: main
+    type: esp-idf # ОБЯЗАТЕЛЬНО для работы с driver/spi_master.h
 
 wifi:
   ssid: "ASUS_W"
   password: "whiteWOLF667djkr"
-  # Оставляем для стабильности работы радио
   power_save_mode: none
 
 mqtt:
