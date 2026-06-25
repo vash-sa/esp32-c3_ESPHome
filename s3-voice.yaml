@@ -9,6 +9,8 @@ esp32:
 wifi:
   ssid: "ASUS_W"
   password: "whiteWOLF667djkr"
+  fast_connect: true
+  power_save_mode: NONE
 
 # Включаем шину I2S звука для Supermini
 i2s_audio:
