@@ -1,0 +1,35 @@
+esphome:
+  name: esphome-web-cdf5a4
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: arduino
+
+wifi:
+  ssid: "ASUS_W"
+  password: "whiteWOLF667djkr"
+
+# Включаем шину I2S звука для Supermini
+i2s_audio:
+  - id: i2s_input_bus
+    i2s_bclk_pin: GPIO4    # MIC_SCK (контакт 4)
+    i2s_lrclk_pin: GPIO5   # MIC_WS  (контакт 5)
+
+# Настройка микрофона
+microphone:
+  - platform: i2s_audio
+    id: board_microphone
+    i2s_audio_id: i2s_input_bus
+    i2s_din_pin: GPIO6     # MIC_SD  (контакт 6)
+    adc_type: external
+    pdm: false
+    bits_per_sample: 32bit
+
+# Подключение к голосовому движку Home Assistant
+voice_assistant:
+  id: va
+  microphone: board_microphone
+
+api:
+logger:
