@@ -18,7 +18,7 @@ jobs:
         run: pip install esphome
 
       - name: Compile YAML
-        run: esphome compile bt.yaml
+        run: esphome compile s3-voice.yaml
 
       - name: Copy build artifacts to output
         run: |
@@ -31,7 +31,7 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: esp32-c3-firmware
+          name: esp32-s3-voice
           # Забираем созданную папку
           path: output/
           if-no-files-found: error
