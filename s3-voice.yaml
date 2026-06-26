@@ -44,12 +44,12 @@ binary_sensor:
     on_release:
       - voice_assistant.stop
 
+# Подключение к голосовому движку Home Assistant
 voice_assistant:
   id: va
   microphone: board_microphone
-  # ИСПРАВЛЕНО: используются поддерживаемые форматы и безопасные уровни усиления
   noise_suppression_level: 2
-  auto_gain: 12dB
+  auto_gain: 12.0            # ИСПРАВЛЕНО: добавлена точка для формата float (дробное число)
   volume_multiplier: 1.0
   
 api:
