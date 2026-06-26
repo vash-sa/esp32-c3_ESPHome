@@ -27,6 +27,15 @@ microphone:
     adc_type: external
     pdm: false
     bits_per_sample: 32bit
+# Привязка встроенной кнопки BOOT
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO0
+      inverted: true
+    name: "Кнопка"
+    on_press:
+      - voice_assistant.start:
 
 # Подключение к голосовому движку Home Assistant
 voice_assistant:
