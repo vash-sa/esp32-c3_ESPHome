@@ -27,12 +27,13 @@ microphone:
     adc_type: external
     pdm: false
     bits_per_sample: 32bit
-# Привязка встроенной кнопки BOOT
+# Привязка встроенной кнопки BOOT с подтяжкой питания
 binary_sensor:
   - platform: gpio
     pin:
       number: GPIO0
       inverted: true
+      mode: INPUT_PULLUP
     name: "Кнопка"
     on_press:
       - voice_assistant.start:
