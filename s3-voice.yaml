@@ -48,10 +48,9 @@ binary_sensor:
 voice_assistant:
   id: va
   microphone: board_microphone
-  # ДОБАВЛЕНО: программное шумоподавление и сильное усиление звука
   noise_suppression_level: 3
-  auto_gain: 31dB
-  volume_multiplier: 5.0
+  auto_gain: 10              # ИСПРАВЛЕНО: указано числом без «dB»
+  volume_multiplier: 2.0     # Снижено до стандартного безопасного максимума
 
 api:
 logger:
