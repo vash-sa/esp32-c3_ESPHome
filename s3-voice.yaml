@@ -18,17 +18,16 @@ i2s_audio:
     i2s_bclk_pin: GPIO4    # MIC_SCK (контакт 4)
     i2s_lrclk_pin: GPIO5   # MIC_WS  (контакт 5)
 
-# Настройка микрофона
 microphone:
   - platform: i2s_audio
     id: board_microphone
     i2s_audio_id: i2s_input_bus
     i2s_din_pin: GPIO6     # MIC_SD  (контакт 6)
+    adc_type: external     # <--- ДОБАВЬТЕ ЭТУ СТРОКУ
     pdm: false
-    bits_per_sample: 32bit # ИСПРАВЛЕНО: INMP441 требует 32bit для корректного сдвига
-    # Аппаратный фильтр постоянного смещения, который мы подбирали в Arduino IDE:
+    bits_per_sample: 32bit 
     dc_offset_processing: high_pass_filter 
-
+    
 # Привязка встроенной кнопки BOOT с подтяжкой питания
 binary_sensor:
   - platform: gpio
