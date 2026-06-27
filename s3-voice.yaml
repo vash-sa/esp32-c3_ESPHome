@@ -43,12 +43,10 @@ binary_sensor:
 voice_assistant:
   id: va
   microphone: board_microphone
-  noise_suppression_level: 3   # ИСПРАВЛЕНО: подняли до 3 для лучшей фильтрации
-  auto_gain: 20.0dBFS          # ИСПРАВЛЕНО: строго float-формат '24.0dBFS' большими буквами
-  volume_multiplier: 1.5       # Чуть снизили, чтобы не было перегруза при 24dBFS
-  # --- ДОБАВЬТЕ ЭТИ СТРОКИ ---
-  max_listen_duration: 10s       # Ассистент принудительно выключится через 10 секунд, даже если вы молчите
-  silence_detection: true        # Включаем автоматическое определение конца фразы
+  noise_suppression_level: 3
+  auto_gain: 24.0dBFS
+  volume_multiplier: 1.5
 
 api:
 logger:
+
