@@ -24,9 +24,11 @@ microphone:
     id: board_microphone
     i2s_audio_id: i2s_input_bus
     i2s_din_pin: GPIO6     # MIC_SD  (контакт 6)
-    adc_type: external
     pdm: false
-    bits_per_sample: 16bit
+    bits_per_sample: 32bit # ИСПРАВЛЕНО: INMP441 требует 32bit для корректного сдвига
+    # Аппаратный фильтр постоянного смещения, который мы подбирали в Arduino IDE:
+    dc_offset_processing: high_pass_filter 
+
 # Привязка встроенной кнопки BOOT с подтяжкой питания
 binary_sensor:
   - platform: gpio
@@ -34,6 +36,7 @@ binary_sensor:
       number: GPIO0
       inverted: true
       mode: INPUT_PULLUP
+      ignore_strapping_warning: true # Глушим предупреждение компилятора про strapping pin
     name: "Кнопка"
     on_press:
       - voice_assistant.start:
@@ -42,27 +45,12 @@ binary_sensor:
 voice_assistant:
   id: va
   microphone: board_microphone
-  noise_suppression_level: 2
-  auto_gain: 24dBFS            # ИСПРАВЛЕНО: добавлена точка для формата float (дробное число)
-  volume_multiplier: 2.0
+  noise_suppression_level: 3   # ИСПРАВЛЕНО: подняли до 3 для лучшей фильтрации
+  auto_gain: 20.0dBFS          # ИСПРАВЛЕНО: строго float-формат '24.0dBFS' большими буквами
+  volume_multiplier: 1.5       # Чуть снизили, чтобы не было перегруза при 24dBFS
+  # --- ДОБАВЬТЕ ЭТИ СТРОКИ ---
+  max_listen_duration: 10s       # Ассистент принудительно выключится через 10 секунд, даже если вы молчите
+  silence_detection: true        # Включаем автоматическое определение конца фразы
 
 api:
 logger:
-
-
-# Привязка встроенной кнопки BOOT с подтяжкой питания
-#binary_sensor:
-#  - platform: gpio
-#    pin:
-#      number: GPIO0
-#      inverted: true
-#      mode: INPUT_PULLUP
-#    name: "Кнопка"
-#    # Нажали и держим — пошла запись
-#    on_press:
-#      - voice_assistant.start:
-#          silence_detection: false
-    # Отпустили кнопку — запись завершилась и отправилась на сервер
-#    on_release:
-#      - voice_assistant.stop
-  
