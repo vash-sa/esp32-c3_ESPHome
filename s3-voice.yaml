@@ -49,7 +49,7 @@ voice_assistant:
   id: va
   microphone: board_microphone
   noise_suppression_level: 2
-  auto_gain: 12.0            # ИСПРАВЛЕНО: добавлена точка для формата float (дробное число)
+  auto_gain: 12.0dB            # ИСПРАВЛЕНО: добавлена точка для формата float (дробное число)
   volume_multiplier: 1.0
   
 api:
