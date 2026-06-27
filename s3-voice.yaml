@@ -25,8 +25,7 @@ microphone:
     i2s_din_pin: GPIO6     # MIC_SD  (контакт 6)
     adc_type: external     # <--- ДОБАВЬТЕ ЭТУ СТРОКУ
     pdm: false
-    bits_per_sample: 32bit 
-    dc_offset_processing: high_pass_filter 
+    bits_per_sample: 32bit      
     
 # Привязка встроенной кнопки BOOT с подтяжкой питания
 binary_sensor:
