@@ -26,8 +26,7 @@ microphone:
     i2s_din_pin: GPIO6     # MIC_SD  (контакт 6)
     adc_type: external
     pdm: false
-    bits_per_sample: 16bit # ИСПРАВЛЕНО: Whisper работает только с 16bit
-
+    bits_per_sample: 16bit
 # Привязка встроенной кнопки BOOT с подтяжкой питания
 binary_sensor:
   - platform: gpio
@@ -36,21 +35,34 @@ binary_sensor:
       inverted: true
       mode: INPUT_PULLUP
     name: "Кнопка"
-    # Нажали и держим — пошла запись
     on_press:
       - voice_assistant.start:
-          silence_detection: false
-    # Отпустили кнопку — запись завершилась и отправилась на сервер
-    on_release:
-      - voice_assistant.stop
 
 # Подключение к голосовому движку Home Assistant
 voice_assistant:
   id: va
   microphone: board_microphone
   noise_suppression_level: 2
-  auto_gain: 12dBFS            # ИСПРАВЛЕНО: добавлена точка для формата float (дробное число)
-  volume_multiplier: 1.0
-  
+  auto_gain: 24dBFS            # ИСПРАВЛЕНО: добавлена точка для формата float (дробное число)
+  volume_multiplier: 2.0
+
 api:
 logger:
+
+
+# Привязка встроенной кнопки BOOT с подтяжкой питания
+#binary_sensor:
+#  - platform: gpio
+#    pin:
+#      number: GPIO0
+#      inverted: true
+#      mode: INPUT_PULLUP
+#    name: "Кнопка"
+#    # Нажали и держим — пошла запись
+#    on_press:
+#      - voice_assistant.start:
+#          silence_detection: false
+    # Отпустили кнопку — запись завершилась и отправилась на сервер
+#    on_release:
+#      - voice_assistant.stop
+  
