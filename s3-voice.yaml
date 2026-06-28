@@ -27,6 +27,7 @@ microphone:
     pdm: false
     bits_per_sample: 32bit      
     sample_rate: 16000     # КРИТИЧЕСКИ ВАЖНО: частота для голосового ассистента HA
+    channel: left
 
 # Привязка встроенной кнопки BOOT с подтяжкой питания
 binary_sensor:
@@ -44,9 +45,9 @@ binary_sensor:
 voice_assistant:
   id: va
   microphone: board_microphone
-  noise_suppression_level: 3   # Агрессивное подавление шумов (максимум)
-  auto_gain: 24.0dBFS          # Автоматическое выравнивание громкости голоса
-  volume_multiplier: 1.5       # Дополнительное общее усиление микрофона в 1.5 раза
+  #noise_suppression_level: 3   # Агрессивное подавление шумов (максимум)
+  #auto_gain: 24.0dBFS          # Автоматическое выравнивание громкости голоса
+  #volume_multiplier: 1.5       # Дополнительное общее усиление микрофона в 1.5 раза
 
 # Обязательные компоненты для интеграции с Home Assistant
 api:
