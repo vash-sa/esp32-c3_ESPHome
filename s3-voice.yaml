@@ -7,8 +7,8 @@ esp32:
     type: arduino
 
 wifi:
-  ssid: "ASUS_W"
-  password: "whiteWOLF667djkr"
+  ssid: "ASUS_W"                # <-- Замените на ваш Wi-Fi, если имя другое
+  password: "whiteWOLF667djkr"  # <-- Замените на ваш пароль от Wi-Fi
   fast_connect: true
   power_save_mode: NONE
 
@@ -23,10 +23,11 @@ microphone:
     id: board_microphone
     i2s_audio_id: i2s_input_bus
     i2s_din_pin: GPIO6     # MIC_SD  (контакт 6)
-    adc_type: external     # <--- ДОБАВЬТЕ ЭТУ СТРОКУ
+    adc_type: external     
     pdm: false
     bits_per_sample: 32bit      
-    
+    sample_rate: 16000     # КРИТИЧЕСКИ ВАЖНО: частота для голосового ассистента HA
+
 # Привязка встроенной кнопки BOOT с подтяжкой питания
 binary_sensor:
   - platform: gpio
@@ -34,19 +35,19 @@ binary_sensor:
       number: GPIO0
       inverted: true
       mode: INPUT_PULLUP
-      ignore_strapping_warning: true # Глушим предупреждение компилятора про strapping pin
-    name: "Кнопка"
+      ignore_strapping_warning: true 
+    name: "Кнопка Ассистента"
     on_press:
       - voice_assistant.start:
 
-# Подключение к голосовому движку Home Assistant
+# Подключение к голосовому движку Home Assistant с обработкой звука
 voice_assistant:
   id: va
   microphone: board_microphone
-  noise_suppression_level: 3
-  auto_gain: 24.0dBFS
-  volume_multiplier: 1.5
+  noise_suppression_level: 3   # Агрессивное подавление шумов (максимум)
+  auto_gain: 24.0dBFS          # Автоматическое выравнивание громкости голоса
+  volume_multiplier: 1.5       # Дополнительное общее усиление микрофона в 1.5 раза
 
+# Обязательные компоненты для интеграции с Home Assistant
 api:
 logger:
-
